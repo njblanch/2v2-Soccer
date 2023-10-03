@@ -31,6 +31,7 @@ public:
     void setPlayer(int playerChoice); // Set the active player (1 or 2)
 
     // Game Actions
+    void nextTurn();
     bool movePlayer(int directionChoice); // Move the selected player in a specified direction
     void passBall(); // Pass the ball
     bool shootBall(); // Shoot the ball
@@ -38,12 +39,15 @@ public:
     void switchActiveTeam(); // Swap between teams 1 and 2 being active
 
 private:
+    int getUserInput(int selectionMax);
+
     Player team1Player1, team1Player2, team2Player1, team2Player2; // Player objects
     Player* activePlayer; // Pointer to whatever player is active
     Field field; // Field object
     int activeTeam;
     int offense;
     int team1Score, team2Score;
+    int remainingTurns;
 };
 
 #endif //M1OEP_NJBLANCH_SOCCERGAME_H

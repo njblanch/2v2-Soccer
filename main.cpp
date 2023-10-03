@@ -56,17 +56,6 @@ int main() {
 
     // Create some variables and objects that we will need
     SoccerGame game;
-    int activeTeam;
-    int offense;
-    int numChoices;
-    int playerChoice;
-    int actionChoice;
-    int directionChoice;
-    bool validPlay;
-    bool stealBall;
-    bool shotAttempt;
-    bool successfulShot;
-    int remainingTurns = 8;
 
     // Start the game
     game.startGame();
@@ -77,111 +66,8 @@ int main() {
         // Print the playing field
         cout << game.getField() << endl;
 
-        // Get our active team and offense
-        activeTeam = game.getActiveTeam();
-        offense = game.getOffense();
-        if (activeTeam == offense) {
-            --remainingTurns;
-        }
-        shotAttempt = false;
-        successfulShot = false;
-
-        cout << "Team " << activeTeam << " is up" << endl;
-        validPlay = false;
-        while (!validPlay) {
-            if (offense == activeTeam) {
-                cout << remainingTurns << " TURNS REMAINING" << endl;
-                cout << "Would you like to...\n(1) Move\n(2) Pass\n(3) Shoot" << endl;
-                numChoices = 3;
-                actionChoice = getUserInput(numChoices);
-                if (actionChoice == 1) {
-                    while (!validPlay) {
-                        cout << "Which player would you like to move? 𖨆 or 𖠋 (1 or 2)?" << endl;
-                        numChoices = 2;
-                        playerChoice = getUserInput(numChoices);
-                        game.setPlayer(playerChoice);
-                        cout << "MOVE #1: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-                        numChoices = 4;
-                        actionChoice = getUserInput(numChoices);
-                        validPlay = game.movePlayer(actionChoice);
-                        if (!validPlay) {
-                            cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
-                        }
-                    }
-                    if (!game.canStealBall()) {
-                        validPlay = false;
-                    }
-                    cout << game.getField() << endl;
-                    while (!validPlay) {
-                        cout << "MOVE #2: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-                        numChoices = 4;
-                        actionChoice = getUserInput(numChoices);
-                        validPlay = game.movePlayer(actionChoice);
-                        if (!validPlay) {
-                            cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
-                        }
-                    }
-                } else if (actionChoice == 2) {
-                    game.passBall();
-                    cout << "Team " << game.getActiveTeam() << " passed the ball" << endl;
-                    validPlay = true;
-                } else {
-                    shotAttempt = true;
-                    successfulShot = game.shootBall();
-                    validPlay = true;
-                }
-            } else {
-                cout << "Which player would you like to move? 𖨆 or 𖠋 (1 or 2)?" << endl;
-                numChoices = 2;
-                playerChoice = getUserInput(numChoices);
-                game.setPlayer(playerChoice);
-                cout << "Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-                numChoices = 4;
-                directionChoice = getUserInput(numChoices);
-                validPlay = game.movePlayer(directionChoice);
-                if (!validPlay) {
-                    cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
-                }
-            }
-        }
-        stealBall = game.canStealBall();
-        if (stealBall) {
-            cout << "Team " << game.getActiveTeam() << " stole the ball!" << endl;
-            game.arrangePlayers(offense == 1 ? 2 : 1);
-            offense = game.getOffense();
-            if (offense != activeTeam) {
-                game.switchActiveTeam();
-            }
-            cout << "Team " << game.getActiveTeam() << " now has the ball" << endl;
-            cout << "The score remains at " << game.getTeam1Score() << " - " << game.getTeam2Score() << endl;
-            remainingTurns = 8;
-        } else if (successfulShot) {
-            cout << "Team " << game.getActiveTeam() << " scored!" << endl;
-            game.arrangePlayers(offense == 1 ? 2 : 1);
-            game.switchActiveTeam();
-            if (!game.isGameOver()) {
-                cout << "Team " << game.getActiveTeam() << " now has the ball" << endl;
-            }
-            cout << "The score is now " << game.getTeam1Score() << " - " << game.getTeam2Score() << endl;
-            remainingTurns = 8;
-        } else if (shotAttempt) {
-            cout << "Team " << game.getActiveTeam() << " tried to shoot but missed!" << endl;
-            game.arrangePlayers(offense == 1 ? 2 : 1);
-            game.switchActiveTeam();
-            cout << "Team " << game.getActiveTeam() << " now has the ball" << endl;
-            cout << "The score remains at " << game.getTeam1Score() << " - " << game.getTeam2Score() << endl;
-            remainingTurns = 8;
-        } else if (remainingTurns <= 0) {
-            cout << "Team " << game.getActiveTeam() << " ran out of moves" << endl;
-            game.arrangePlayers(offense == 1 ? 2 : 1);
-            game.switchActiveTeam();
-            cout << "Team " << game.getActiveTeam() << " now has the ball" << endl;
-            cout << "The score remains at " << game.getTeam1Score() << " - " << game.getTeam2Score() << endl;
-            remainingTurns = 8;
-        } else {
-            game.switchActiveTeam();
-        }
-
+        // Execute the next turn
+        game.nextTurn();
     }
 
     if (game.getTeam1Score() >= 3) {

@@ -76,7 +76,8 @@ ostream& operator<<(ostream& outs, const Field& field) {
         // Left goal
         if (y <= double(field.height - 1) / 2 + 1 && y >= double(field.height - 1) / 2 - 1) {
             outs << "| |";
-        } else if (y + 1 <= double(field.height - 1) / 2 + 1 && y + 1 >= double(field.height - 1) / 2 - 1 || y - 1 <= double(field.height - 1) / 2 + 1 && y - 1 >= double(field.height - 1) / 2 - 1) {
+        } else if (y + 1 <= double(field.height - 1) / 2 + 1 && y + 1 >= double(field.height - 1) / 2 - 1 ||
+                   y - 1 <= double(field.height - 1) / 2 + 1 && y - 1 >= double(field.height - 1) / 2 - 1) {
             outs << " -|";
         } else {
             outs << "  |";

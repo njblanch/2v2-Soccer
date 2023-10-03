@@ -3,9 +3,13 @@
 //
 
 #include <cmath>
+#include <iostream>
+#include <sstream>
 #include "SoccerGame.h"
 #include "Field.h"
 #include "Player.h"
+
+using std::cout, std::endl;
 
 
 /**************** SoccerGame class ****************/
@@ -26,7 +30,8 @@ SoccerGame::SoccerGame() :
     // Team 1 starts on offense
     offense(1),
     team1Score(0),
-    team2Score(0)
+    team2Score(0),
+    remainingTurns(8)
 {}
 
 // Start the game
@@ -106,6 +111,119 @@ void SoccerGame::setPlayer(int playerChoice) {
         activePlayer = &team2Player1;
     } else {
         activePlayer = &team2Player2;
+    }
+}
+
+void SoccerGame::nextTurn() {
+    int numChoices;
+    int playerChoice;
+    int actionChoice;
+    int directionChoice;
+    bool validPlay;
+    bool stealBall;
+    bool shotAttempt;
+    bool successfulShot;
+
+    if (activeTeam == offense) {
+        --remainingTurns;
+    }
+    shotAttempt = false;
+    successfulShot = false;
+
+    cout << "Team " << activeTeam << " is up" << endl;
+    validPlay = false;
+    while (!validPlay) {
+        if (offense == activeTeam) {
+            cout << remainingTurns << " TURNS REMAINING" << endl;
+            cout << "Would you like to...\n(1) Move\n(2) Pass\n(3) Shoot" << endl;
+            numChoices = 3;
+            actionChoice = getUserInput(numChoices);
+            if (actionChoice == 1) {
+                while (!validPlay) {
+                    cout << "Which player would you like to move? 𖨆 or 𖠋 (1 or 2)?" << endl;
+                    numChoices = 2;
+                    playerChoice = getUserInput(numChoices);
+                    setPlayer(playerChoice);
+                    cout << "MOVE #1: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
+                    numChoices = 4;
+                    actionChoice = getUserInput(numChoices);
+                    validPlay = movePlayer(actionChoice);
+                    if (!validPlay) {
+                        cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
+                    }
+                }
+                if (!canStealBall()) {
+                    validPlay = false;
+                }
+                cout << field << endl;
+                while (!validPlay) {
+                    cout << "MOVE #2: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
+                    numChoices = 4;
+                    actionChoice = getUserInput(numChoices);
+                    validPlay = movePlayer(actionChoice);
+                    if (!validPlay) {
+                        cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
+                    }
+                }
+            } else if (actionChoice == 2) {
+                passBall();
+                cout << "Team " << activeTeam << " passed the ball" << endl;
+                validPlay = true;
+            } else {
+                shotAttempt = true;
+                successfulShot = shootBall();
+                validPlay = true;
+            }
+        } else {
+            cout << "Which player would you like to move? 𖨆 or 𖠋 (1 or 2)?" << endl;
+            numChoices = 2;
+            playerChoice = getUserInput(numChoices);
+            setPlayer(playerChoice);
+            cout << "Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
+            numChoices = 4;
+            directionChoice = getUserInput(numChoices);
+            validPlay = movePlayer(directionChoice);
+            if (!validPlay) {
+                cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
+            }
+        }
+    }
+    stealBall = canStealBall();
+    if (stealBall) {
+        cout << "Team " << activeTeam << " stole the ball!" << endl;
+        arrangePlayers(offense == 1 ? 2 : 1);
+        offense = getOffense();
+        if (offense != activeTeam) {
+            switchActiveTeam();
+        }
+        cout << "Team " << activeTeam << " now has the ball" << endl;
+        cout << "The score remains at " << team1Score << " - " << team2Score << endl;
+        remainingTurns = 8;
+    } else if (successfulShot) {
+        cout << "Team " << activeTeam << " scored!" << endl;
+        arrangePlayers(offense == 1 ? 2 : 1);
+        switchActiveTeam();
+        if (!isGameOver()) {
+            cout << "Team " << activeTeam << " now has the ball" << endl;
+        }
+        cout << "The score is now " << team1Score << " - " << team2Score << endl;
+        remainingTurns = 8;
+    } else if (shotAttempt) {
+        cout << "Team " << activeTeam << " tried to shoot but missed!" << endl;
+        arrangePlayers(offense == 1 ? 2 : 1);
+        switchActiveTeam();
+        cout << "Team " << activeTeam << " now has the ball" << endl;
+        cout << "The score remains at " << team1Score << " - " << team2Score << endl;
+        remainingTurns = 8;
+    } else if (remainingTurns <= 0) {
+        cout << "Team " << activeTeam << " ran out of moves" << endl;
+        arrangePlayers(offense == 1 ? 2 : 1);
+        switchActiveTeam();
+        cout << "Team " << activeTeam << " now has the ball" << endl;
+        cout << "The score remains at " << team1Score << " - " << team2Score << endl;
+        remainingTurns = 8;
+    } else {
+        switchActiveTeam();
     }
 }
 
@@ -238,4 +356,36 @@ bool SoccerGame::canStealBall() {
 // Switch the active team
 void SoccerGame::switchActiveTeam() {
     activeTeam = activeTeam == 1 ? 2 : 1;
+}
+
+// Function gets and validates user input for an integer from 1 to selectionMax
+int SoccerGame::getUserInput(int selectionMax) {
+    string input;
+    int num;
+    std::stringstream ss;
+    getline(std::cin, input);
+    // Check if input is empty
+    if (input.length() == 0) {
+        cout << "No input" << endl;
+        cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
+        ss.clear();
+        return getUserInput(selectionMax);
+    }
+    // Make sure all characters are numeric
+    for (char c : input) {
+        if (!isnumber(c)) {
+            cout << "Invalid input" << endl;
+            cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
+            return getUserInput(selectionMax);
+        }
+    }
+    // Try to store input in num as int, check to make sure that it is within the desired range
+    ss << input;
+    if (!(ss >> num) || num > selectionMax || num <= 0) {
+        cout << "Invalid input" << endl;
+        cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
+        ss.clear();
+        return getUserInput(selectionMax);
+    }
+    return num;
 }
