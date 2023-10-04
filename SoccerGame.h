@@ -7,7 +7,6 @@
 
 #include "Field.h"
 #include "Player.h"
-#include "UserInput.h"
 
 class SoccerGame {
 public:
@@ -33,9 +32,7 @@ public:
 
     // Game Actions
     void nextTurn();
-    bool movePlayer(int directionChoice); // Move the selected player in a specified direction
     void passBall(); // Pass the ball
-    bool shootBall(); // Shoot the ball
     bool canStealBall(); // Test if the ball can be stolen
     void switchActiveTeam(); // Swap between teams 1 and 2 being active
 

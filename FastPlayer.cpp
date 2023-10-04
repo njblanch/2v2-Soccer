@@ -8,10 +8,6 @@
 FastPlayer::FastPlayer(int teamNumber, int playerNumber) : Player(teamNumber, playerNumber) {
 }
 
-string FastPlayer::generatePlayerSymbol() {
-    return std::string();
-}
-
 bool FastPlayer::move(Field& field) {
     //cout << "MOVE #1: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
     cout << "MOVE #1: Which direction would you like to move?\n"
@@ -59,9 +55,9 @@ bool FastPlayer::move(Field& field) {
         }
         if (!validMove) {
             cout << "You can't move player " << getPlayerNumber() << " in that direction right now" << endl;
-            return false;
         }
     }
+    return validMove;
 }
 
 bool FastPlayer::shoot() {

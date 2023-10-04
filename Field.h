@@ -20,11 +20,13 @@ public:
     Field(int width, int height); // Constructor to set width and height of field
 
     // Setters
-    bool setPlayerPos(Player* player, int x, int y); // Update player position
+    bool setPlayerPos(Player* player); // Update player position
+    bool setPlayerPos(Player* player, int x, int y); // Set player position with specified x and y
 
     // Getters
     int getWidth() const;
     int getHeight() const;
+    std::vector<std::vector<bool>> getOccupiedSpaces();
 
     bool isSpaceOccupied(int x, int y); // Check if a space is occupied by a player
 

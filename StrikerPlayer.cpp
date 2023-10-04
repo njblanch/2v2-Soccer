@@ -7,9 +7,6 @@
 StrikerPlayer::StrikerPlayer(int teamNumber, int playerNumber) : Player(teamNumber, playerNumber) {
 }
 
-string StrikerPlayer::generatePlayerSymbol() {
-    return std::string();
-}
 
 bool StrikerPlayer::move(Field& field) {
     //cout << "Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
@@ -42,8 +39,8 @@ bool StrikerPlayer::move(Field& field) {
     }
     if (!validMove) {
         cout << "You can't move player " << getPlayerNumber() << " in that direction right now" << endl;
-        return false;
     }
+    return validMove;
 }
 
 bool StrikerPlayer::shoot() {

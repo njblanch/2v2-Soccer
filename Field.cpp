@@ -31,6 +31,26 @@ Field::Field(int width, int height) : width(width), height(height) {
 }
 
 // Update player position
+bool Field::setPlayerPos(Player* player) {
+    int yPos;
+    int xPos;
+    bool found = false;
+    for (yPos = 0; yPos < fieldVector.size(); ++yPos) {
+        for (xPos = 0; xPos < fieldVector[yPos].size(); ++xPos) {
+            if (fieldVector[yPos][xPos] == player) {
+                fieldVector[yPos][xPos] = nullptr;
+                fieldVector[player->getYPosition()][player->getXPosition()] = player;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            break;
+        }
+    }
+    return found;
+}
+
 bool Field::setPlayerPos(Player* player, int x, int y) {
     // Update the player's position in the field vector
     if (x < width && x >= 0 && y < height && y >= 0) {
@@ -53,6 +73,21 @@ int Field::getWidth() const {
 
 int Field::getHeight() const {
     return height;
+}
+
+std::vector<std::vector<bool>> Field::getOccupiedSpaces() {
+    std::vector<std::vector<bool>> occupiedSpaces;
+    if (!fieldVector.empty()) {
+        occupiedSpaces = std::vector<std::vector<bool>>(fieldVector.size(),std::vector<bool>(fieldVector[0].size(),false));
+        for (int y = 0; y < fieldVector.size(); ++y) {
+            for (int x = 0; x < fieldVector[0].size(); ++x) {
+                if (isSpaceOccupied(x, y)) {
+                    occupiedSpaces[y][x] = true;
+                }
+            }
+        }
+    }
+    return occupiedSpaces;
 }
 
 // Check if a space is occupied by a player

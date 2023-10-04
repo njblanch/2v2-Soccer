@@ -4,10 +4,8 @@
 
 #include <cmath>
 #include <iostream>
-#include <sstream>
 #include "SoccerGame.h"
-#include "Field.h"
-#include "Player.h"
+#include "UserInput.h"
 
 using std::cout, std::endl;
 
@@ -144,16 +142,34 @@ void SoccerGame::nextTurn() {
                     numChoices = 2;
                     playerChoice = getUserInput(numChoices);
                     setPlayer(playerChoice);
-                    activePlayer->move();
+                    validPlay = activePlayer->moveInput(field.getOccupiedSpaces());
+                    if (validPlay) {
+                        field.setPlayerPos(activePlayer);
+                    }
                 }
-                cout << field << endl;
             } else if (actionChoice == 2) {
                 passBall();
                 cout << "Team " << activeTeam << " passed the ball" << endl;
                 validPlay = true;
             } else {
                 shotAttempt = true;
-                successfulShot = shootBall();
+                if (team1Player1.hasBall()) {
+                    activePlayer = &team1Player1;
+                } else if (team1Player2.hasBall()) {
+                    activePlayer = &team1Player2;
+                } else if (team2Player1.hasBall()) {
+                    activePlayer = &team2Player1;
+                } else {
+                    activePlayer = &team2Player2;
+                }
+                successfulShot = activePlayer->shoot(field.getWidth(), field.getHeight());
+                if (successfulShot) {
+                    if (offense == 1) {
+                        ++team1Score;
+                    } else {
+                        ++team2Score;
+                    }
+                }
                 validPlay = true;
             }
         } else {
@@ -161,12 +177,9 @@ void SoccerGame::nextTurn() {
             numChoices = 2;
             playerChoice = getUserInput(numChoices);
             setPlayer(playerChoice);
-            cout << "Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-            numChoices = 4;
-            directionChoice = getUserInput(numChoices);
-            validPlay = movePlayer(directionChoice);
-            if (!validPlay) {
-                cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
+            validPlay = activePlayer->moveInput(field.getOccupiedSpaces());
+            if (validPlay) {
+                field.setPlayerPos(activePlayer);
             }
         }
     }
@@ -209,24 +222,6 @@ void SoccerGame::nextTurn() {
     }
 }
 
-// Move the selected player in a specified direction
-bool SoccerGame::movePlayer(int directionChoice) {
-    bool validMove;
-    int x = activePlayer->getXPosition();
-    int y = activePlayer->getYPosition();
-    // Set player position based on direction choice
-    if (directionChoice == 1) {
-        validMove = field.setPlayerPos(activePlayer, x, y - 1);
-    } else if (directionChoice == 2) {
-        validMove = field.setPlayerPos(activePlayer, x, y + 1);
-    } else if (directionChoice == 3) {
-        validMove = field.setPlayerPos(activePlayer, x - 1, y);
-    } else {
-        validMove = field.setPlayerPos(activePlayer, x + 1, y);
-    }
-    return validMove;
-}
-
 // Pass the ball
 void SoccerGame::passBall() {
     // Set active player
@@ -257,47 +252,6 @@ void SoccerGame::passBall() {
             team2Player2.setHasBall(false);
         }
     }
-}
-
-// Shoot the ball
-bool SoccerGame::shootBall() {
-    bool goal;
-    // Set active player
-    if (team1Player1.hasBall()) {
-        activePlayer = &team1Player1;
-    } else if (team1Player2.hasBall()) {
-        activePlayer = &team1Player2;
-    } else if (team2Player1.hasBall()) {
-        activePlayer = &team2Player1;
-    } else {
-        activePlayer = &team2Player2;
-    }
-    double distance;
-    // Distance stat for how far the player is from the goal (actually distance^2 so that scoring chance drops off faster)
-    if (offense == 1) {
-        distance = pow(double(field.getWidth() - activePlayer->getXPosition()), 2) + pow(double(field.getHeight() / 2) - activePlayer->getYPosition(), 2);
-    } else {
-        distance = pow(double(activePlayer->getXPosition()), 2) + pow(double(field.getHeight() / 2) - activePlayer->getYPosition(), 2);
-    }
-    // Little calculation to decide if the player scores
-    double chance = 100 - distance;
-    if (chance > 0) {
-        if ((rand() % 100 + 1) > chance) {
-            goal = false;
-        } else {
-            goal = true;
-        }
-    } else {
-        goal = false;
-    }
-    if (goal) {
-        if (offense == 1) {
-            ++team1Score;
-        } else {
-            ++team2Score;
-        }
-    }
-    return goal;
 }
 
 // Try to steal the ball

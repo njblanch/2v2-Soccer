@@ -13,7 +13,6 @@ using std::string;
 class StrikerPlayer : public Player {
     StrikerPlayer(int teamNumber, int playerNumber);
 
-    string generatePlayerSymbol() override;
 
     bool move(Field& field) override;
     bool shoot() override;
