@@ -7,8 +7,15 @@
 
 #include "Player.h"
 
-class FastPlayer : public Player {
+using std::ostream;
 
+class FastPlayer : public Player {
+    FastPlayer(int teamNumber, int playerNumber);
+
+    string generatePlayerSymbol() override;
+
+    bool move(Field& field) override;
+    bool shoot() override;
 };
 
 #endif //M2OEP_NJBLANCH_FASTPLAYER_H

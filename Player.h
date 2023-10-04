@@ -5,9 +5,11 @@
 #ifndef M1OEP_NJBLANCH_PLAYER_H
 #define M1OEP_NJBLANCH_PLAYER_H
 
+#include "Field.h"
 #include <string>
+#include <iostream>
 
-using std::string;
+using std::string, std::cout, std::endl;
 
 class Player {
 public:
@@ -15,7 +17,7 @@ public:
     Player(int teamNumber, int playerNumber);
 
     // Returns the player symbol generated based on fields teamNumber, playerNumber, and ballPossession
-    string generatePlayerSymbol();
+    virtual string generatePlayerSymbol() = 0;
 
     // Getters
     int getTeamNumber() const;
@@ -28,6 +30,10 @@ public:
     void setXPosition(int x);
     void setYPosition(int y);
     void setHasBall(bool hasBall);
+
+    // Player actions
+    virtual bool move(Field& field) = 0;
+    virtual bool shoot() = 0;
 
 private:
     int teamNumber;

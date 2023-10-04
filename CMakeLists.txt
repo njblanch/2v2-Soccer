@@ -9,4 +9,5 @@ add_executable(M2OEP-njblanch
         Player.h Player.cpp FastPlayer.h FastPlayer.cpp StrikerPlayer.h StrikerPlayer.cpp
         Field.h Field.cpp
         PlayerSymbols.h
+        UserInput.h
         )

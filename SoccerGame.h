@@ -7,6 +7,7 @@
 
 #include "Field.h"
 #include "Player.h"
+#include "UserInput.h"
 
 class SoccerGame {
 public:
@@ -39,7 +40,6 @@ public:
     void switchActiveTeam(); // Swap between teams 1 and 2 being active
 
 private:
-    int getUserInput(int selectionMax);
 
     Player team1Player1, team1Player2, team2Player1, team2Player2; // Player objects
     Player* activePlayer; // Pointer to whatever player is active

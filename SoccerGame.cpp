@@ -144,27 +144,9 @@ void SoccerGame::nextTurn() {
                     numChoices = 2;
                     playerChoice = getUserInput(numChoices);
                     setPlayer(playerChoice);
-                    cout << "MOVE #1: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-                    numChoices = 4;
-                    actionChoice = getUserInput(numChoices);
-                    validPlay = movePlayer(actionChoice);
-                    if (!validPlay) {
-                        cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
-                    }
-                }
-                if (!canStealBall()) {
-                    validPlay = false;
+                    activePlayer->move();
                 }
                 cout << field << endl;
-                while (!validPlay) {
-                    cout << "MOVE #2: Which direction would you like to move?\n(1) Up\n(2) Down\n(3) Left\n(4) Right" << endl;
-                    numChoices = 4;
-                    actionChoice = getUserInput(numChoices);
-                    validPlay = movePlayer(actionChoice);
-                    if (!validPlay) {
-                        cout << "You can't move player " << playerChoice << " in that direction right now" << endl;
-                    }
-                }
             } else if (actionChoice == 2) {
                 passBall();
                 cout << "Team " << activeTeam << " passed the ball" << endl;
@@ -358,34 +340,3 @@ void SoccerGame::switchActiveTeam() {
     activeTeam = activeTeam == 1 ? 2 : 1;
 }
 
-// Function gets and validates user input for an integer from 1 to selectionMax
-int SoccerGame::getUserInput(int selectionMax) {
-    string input;
-    int num;
-    std::stringstream ss;
-    getline(std::cin, input);
-    // Check if input is empty
-    if (input.length() == 0) {
-        cout << "No input" << endl;
-        cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
-        ss.clear();
-        return getUserInput(selectionMax);
-    }
-    // Make sure all characters are numeric
-    for (char c : input) {
-        if (!isnumber(c)) {
-            cout << "Invalid input" << endl;
-            cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
-            return getUserInput(selectionMax);
-        }
-    }
-    // Try to store input in num as int, check to make sure that it is within the desired range
-    ss << input;
-    if (!(ss >> num) || num > selectionMax || num <= 0) {
-        cout << "Invalid input" << endl;
-        cout << "Enter a number from 1 to " << selectionMax << "..." << endl;
-        ss.clear();
-        return getUserInput(selectionMax);
-    }
-    return num;
-}
