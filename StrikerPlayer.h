@@ -6,16 +6,15 @@
 #define M2OEP_NJBLANCH_STRIKERPLAYER_H
 
 #include "Player.h"
-#include "Field.h"
 
 using std::string;
 
 class StrikerPlayer : public Player {
+public:
     StrikerPlayer(int teamNumber, int playerNumber);
 
 
-    bool move(Field& field) override;
-    bool shoot() override;
+    bool shoot(int fieldWidth, int fieldHeight) override;
 };
 
 #endif //M2OEP_NJBLANCH_STRIKERPLAYER_H

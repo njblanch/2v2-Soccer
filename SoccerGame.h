@@ -7,6 +7,8 @@
 
 #include "Field.h"
 #include "Player.h"
+#include "FastPlayer.h"
+#include "StrikerPlayer.h"
 
 class SoccerGame {
 public:
@@ -38,7 +40,8 @@ public:
 
 private:
 
-    Player team1Player1, team1Player2, team2Player1, team2Player2; // Player objects
+    FastPlayer team1Player1, team2Player1; // Player objects
+    StrikerPlayer team1Player2, team2Player2;
     Player* activePlayer; // Pointer to whatever player is active
     Field field; // Field object
     int activeTeam;

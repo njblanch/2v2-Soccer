@@ -11,10 +11,10 @@
 using std::ostream;
 
 class FastPlayer : public Player {
+public:
     FastPlayer(int teamNumber, int playerNumber);
 
-    bool move(Field& field) override;
-    bool shoot() override;
+    bool moveInput(std::vector<std::vector<bool>> occupiedSpaces) override;
 };
 
 #endif //M2OEP_NJBLANCH_FASTPLAYER_H

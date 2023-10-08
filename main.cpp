@@ -9,6 +9,7 @@ using namespace std;
 
 
 int main() {
+    srand(time(NULL));
     // Print out some info about the game
     cout << "Welcome to 2v2 Soccer!" << endl;
     cout << "Offense:" << endl;

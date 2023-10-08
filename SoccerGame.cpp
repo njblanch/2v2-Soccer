@@ -43,10 +43,10 @@ void SoccerGame::startGame() {
 void SoccerGame::arrangePlayers(int startingOffense) {
     if (startingOffense == 1) {
         // Set player positions and ball possession for if team 1 is on offense
-        field.setPlayerPos(&team1Player1, field.getWidth() / 2 - 1, field.getHeight() / 2);
-        field.setPlayerPos(&team1Player2, field.getWidth() / 2 - 3, field.getHeight() / 2 - 3);
-        field.setPlayerPos(&team2Player1, field.getWidth() / 2 + 3, field.getHeight() / 2 + 2);
-        field.setPlayerPos(&team2Player2, field.getWidth() / 2 + 3, field.getHeight() / 2 - 3);
+        field.setPlayerPos(&team1Player1, field.getWidth() / 2 - 1, field.getHeight() / 2 + 1);
+        field.setPlayerPos(&team1Player2, field.getWidth() / 2 - 2, field.getHeight() / 2 - 1);
+        field.setPlayerPos(&team2Player1, field.getWidth() / 2 + 4, field.getHeight() / 2 - 3);
+        field.setPlayerPos(&team2Player2, field.getWidth() / 2 + 3, field.getHeight() / 2 + 2);
         team1Player1.setHasBall(true);
         team1Player2.setHasBall(false);
         team2Player1.setHasBall(false);
@@ -54,10 +54,10 @@ void SoccerGame::arrangePlayers(int startingOffense) {
         offense = 1;
     } else {
         // Set player positions and ball possession for if team 2 is on offense
-        field.setPlayerPos(&team1Player1, field.getWidth() / 2 - 3, field.getHeight() / 2 + 2);
-        field.setPlayerPos(&team1Player2, field.getWidth() / 2 - 3, field.getHeight() / 2 - 3);
-        field.setPlayerPos(&team2Player1, field.getWidth() / 2 + 1, field.getHeight() / 2);
-        field.setPlayerPos(&team2Player2, field.getWidth() / 2 + 3, field.getHeight() / 2 - 3);
+        field.setPlayerPos(&team1Player1, field.getWidth() / 2 - 4, field.getHeight() / 2 - 3);
+        field.setPlayerPos(&team1Player2, field.getWidth() / 2 - 3, field.getHeight() / 2 + 2);
+        field.setPlayerPos(&team2Player1, field.getWidth() / 2 + 1, field.getHeight() / 2 + 1);
+        field.setPlayerPos(&team2Player2, field.getWidth() / 2 + 2, field.getHeight() / 2 - 1);
         team1Player1.setHasBall(false);
         team1Player2.setHasBall(false);
         team2Player1.setHasBall(true);
