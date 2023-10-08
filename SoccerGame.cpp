@@ -111,6 +111,8 @@ void SoccerGame::setPlayer(int playerChoice) {
     }
 }
 
+// This is where a lot of the gameplay logic is stored
+// This function executes the next turn at any given point in the game
 void SoccerGame::nextTurn() {
     int numChoices;
     int playerChoice;
