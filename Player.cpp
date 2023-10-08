@@ -82,7 +82,11 @@ void Player::setHasBall(bool hasBall) {
     ballPossession = hasBall;
 }
 
+// Function moveInput takes in a vector of spaces that is the same size as the field.
+// This will then prompt the user for where they would like to move
+// Validates input and returns true if the user gives a valid move and false otherwise
 bool Player::moveInput(std::vector<std::vector<bool>> occupiedSpaces) {
+    // Prompt user for direction to move, validate input
     cout << "Which direction would you like to move?\n"
             "    1    \n"
             "    ↑    \n"
@@ -108,6 +112,7 @@ bool Player::moveInput(std::vector<std::vector<bool>> occupiedSpaces) {
         newY = yPosition + 1;
         newX = xPosition;
     }
+    // Check if move is valid
     if (newY < occupiedSpaces.size() && newX < occupiedSpaces[newY].size() && newX >= 0 && newY >= 0) {
         validMove = !occupiedSpaces[newY][newX];
     }
@@ -120,6 +125,8 @@ bool Player::moveInput(std::vector<std::vector<bool>> occupiedSpaces) {
     return validMove;
 }
 
+// Function shoot calculates if a player scores when they try to shoot the ball
+// Returns true if the player scores, false otherwise
 bool Player::shoot(int fieldWidth, int fieldHeight) {
     bool goal;
     double distance;

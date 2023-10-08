@@ -30,7 +30,7 @@ Field::Field(int width, int height) : width(width), height(height) {
     fieldVector.resize(height, std::vector<Player *>(width, nullptr));
 }
 
-// Update player position
+// Update player position to match position stored in player object
 bool Field::setPlayerPos(Player* player) {
     int yPos;
     int xPos;
@@ -51,6 +51,7 @@ bool Field::setPlayerPos(Player* player) {
     return found;
 }
 
+// Set player position to x and y, also call setters for position for player object
 bool Field::setPlayerPos(Player* player, int x, int y) {
     // Update the player's position in the field vector
     if (x < width && x >= 0 && y < height && y >= 0) {
@@ -67,6 +68,7 @@ bool Field::setPlayerPos(Player* player, int x, int y) {
     return false;
 }
 
+// Getters
 int Field::getWidth() const {
     return width;
 }
@@ -75,6 +77,8 @@ int Field::getHeight() const {
     return height;
 }
 
+// Returns a vector of booleans which is the same size as the field vector where
+// true means a player is in a position and false means the position is empty
 std::vector<std::vector<bool>> Field::getOccupiedSpaces() {
     std::vector<std::vector<bool>> occupiedSpaces;
     if (!fieldVector.empty()) {

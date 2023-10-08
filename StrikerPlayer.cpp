@@ -11,6 +11,9 @@ using std::cout, std::endl;
 StrikerPlayer::StrikerPlayer(int teamNumber, int playerNumber) : Player(teamNumber, playerNumber) {
 }
 
+// Function shoot calculates if a player scores when they try to shoot the ball
+// Returns true if the player scores, false otherwise
+// Overrides function shoot from Player, increasing chance by 25%
 bool StrikerPlayer::shoot(int fieldWidth, int fieldHeight) {
     bool goal;
     double distance;
