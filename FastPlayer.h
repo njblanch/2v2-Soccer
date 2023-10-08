@@ -6,9 +6,6 @@
 #define M2OEP_NJBLANCH_FASTPLAYER_H
 
 #include "Player.h"
-#include "UserInput.h"
-
-using std::ostream;
 
 class FastPlayer : public Player {
 public:

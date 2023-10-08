@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "FastPlayer.h"
 #include "StrikerPlayer.h"
+#include "UserInput.h"
 
 class SoccerGame {
 public:

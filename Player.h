@@ -5,10 +5,8 @@
 #ifndef M1OEP_NJBLANCH_PLAYER_H
 #define M1OEP_NJBLANCH_PLAYER_H
 
-#include <string>
-#include <iostream>
 
-using std::string, std::cout, std::endl;
+using std::string;
 
 class Player {
 public:

@@ -20,8 +20,13 @@ int main() {
     cout << " - On defense you can move one player once" << endl;
     cout << " - Get within 1 cardinal space of the player with the ball to steal it" << endl;
     cout << "First team to 3 goals wins!" << endl << endl;
+    cout << "𖨆 = Fast Player" << endl;
+    cout << " - The fast player can move two spaces per turn" << endl;
+    cout << "𖠋 = Striker Player" << endl;
+    cout << " - The striker player has a higher chance of scoring off of a shot" << endl;
+    cout << " - The striker player has at least a 25% chance of scoring from anywhere on the field" << endl << endl;
     cout << "[𖨆] = team 1" << endl;
-    cout << "{𖠋} = team 2" << endl;
+    cout << "{𖨆} = team 2" << endl;
 
     // Create some variables and objects that we will need
     SoccerGame game;

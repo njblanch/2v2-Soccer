@@ -5,7 +5,6 @@
 #include <cmath>
 #include <iostream>
 #include "SoccerGame.h"
-#include "UserInput.h"
 
 using std::cout, std::endl;
 

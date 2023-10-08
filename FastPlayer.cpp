@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "FastPlayer.h"
+#include "UserInput.h"
 
 
 FastPlayer::FastPlayer(int teamNumber, int playerNumber) : Player(teamNumber, playerNumber) {
