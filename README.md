@@ -1,7 +1,11 @@
-# M2OEP-njblanch
+# 2v2 Soccer
 ### By Nathan Blanchard
 
 ## Summary
+This game was created as a project for the class `Advanced Programming` at UVM. This took place during module 2, 
+which focused on class relationships (see below for how these are used within this program), and this project is an 
+extension of a similar project that I created during module 1.
+
 This program is a somewhat chess-style 2v2 soccer game. Each team consists of two players, and you are able to choose 
 which player to control each turn. On offense, you can either move one player twice, pass, or shoot. The closer you are 
 to the goal, the better chance you have of scoring. On defense, you are able to move one player just once as you try to 
@@ -48,25 +52,3 @@ this game.
 ## Citations
 - Kasera, J. (2022, April 12). ABS() in C++. Scaler Topics. https://www.scaler.com/topics/abs-in-cpp/#
 - Thakur, N. (2019, July 30). How to map C++ enums to strings?. tutorialspoint. https://www.tutorialspoint.com/how-to-map-cplusplus-enums-to-strings
-
-## Grade
-- **Main program complexity and usability:** I believe that my program was sufficiently complex, it uses two of the 
-three concepts from module 1, and it validates user input. I spent a lot of time getting the inheritance class
-relationships to work as intended, and this made it so that I had to rethink a lot of the functionality of the game and 
-do some extensive bugtesting. One thing that I could get some points off for with this is that, although I wrote a fair
-bit of new code and spent a lot of time reorganizing classes to work with inheritance, much of the functionality of the 
-game remained unchanged. Because of this, I think that I should get 35 points for the main program complexity and
-usability.
-- **Testing program:** I unfortunately ran out of time to include a testing program. Therefore, I will be getting a 0
-for this category.
-- **Is-A or Has-A class relationship:** I made use of two inheritance class relationships, although both were fairly
-similar. They did, however, override different functions. I believe that these should total 25 points. I also made
-use of 4 has-a class relationships (SoccerGame has-a FastPlayer, a StrikerPlayer, and a Field, and Field has-a 2D vector
-of pointers to player objects). I believe that the FastPlayer and StrikerPlayer should total 25 points. This is because
-their implementation is very similar. Next, I believe that the SoccerGame has-a Field relationship should be 20 points.
-I believe that this class relationship is designed well and used in a way that makes sense. Next, I believe that the 2D
-vector of pointer to player objects should get 5 points, as I do not think it entirely qualifies as a has-a relationship,
-though I still think it makes good use of the concepts we learned in module 2. Overall, I believe that I should get 75
-points for this category.
-- **Penalties:** None (hopefully)
-- **Overall:** 35 + 75 -> 110
